@@ -4,11 +4,13 @@ FlashInfer for MLSys 2024
 
 # Benchmark
 
+Testing online scenarios is primarily latency-sensitive, so ensuring TTFT is crucial. Generally, P99 TTFT should be within 200ms and not exceed 500ms at worst. At this point, the throughput is **goodput**. To meet this requirement, we adjusted the request rate.
+
 ## Llama-3.1-8B-Instruct
 
 ### ShareGPT Scenario
 
-```
+```bash
 # server
 
 ## Triton
@@ -40,7 +42,7 @@ python -m sglang.bench_serving --backend trt --request-rate 46 --model meta-llam
 
 ### Random Scenario
 
-```
+```bash
 # server
 
 ## Triton
@@ -76,7 +78,7 @@ python -m sglang.bench_serving --backend trt --random-input-len 2048 --random-ou
 
 ### ShareGPT Scenario
 
-```
+```bash
 # server
 
 ## Triton
@@ -108,7 +110,7 @@ python -m sglang.bench_serving --backend trt --request-rate 16 --model meta-llam
 
 ### Random Scenario
 
-```
+```bash
 # server
 
 ## Triton
@@ -144,7 +146,7 @@ python -m sglang.bench_serving --backend trt --random-input-len 2048 --random-ou
 
 - https://github.com/yzh119/flashinfer-dev/tree/hopper
 
-```
+```bash
 git clone -b hopper https://github.com/yzh119/flashinfer-dev
 cd flashinfer-dev
 git submodule update --init --recursive
@@ -155,14 +157,14 @@ pip install -e . -v
 
 - https://github.com/MasterJH5574/tensorrt-demo
 
-```
+```bash
 find triton_model_repo -name "config.pbtxt" -exec sed -i 's/batch_size: 2048/batch_size: 256/g' {} \;
 find triton_model_repo -name "config.pbtxt" -exec sed -i 's/preferred_batch_size: \[ 2048 \]/preferred_batch_size: [ 256 ]/g' {} \;
 ```
 
 - https://github.com/sgl-project/sglang
 
-```
+```bash
 # https://github.com/sgl-project/sglang/blob/main/python/sglang/srt/layers/attention/flashinfer_backend.py
 # decoding use tensor core
 # use ragged forward
