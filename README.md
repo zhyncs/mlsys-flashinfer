@@ -144,4 +144,27 @@ python -m sglang.bench_serving --backend trt --random-input-len 2048 --random-ou
 
 - https://github.com/yzh119/flashinfer-dev/tree/hopper
 
+```
+git clone -b hopper https://github.com/yzh119/flashinfer-dev
+cd flashinfer-dev
+git submodule update --init --recursive
+cd flashinfer-aot
+export TORCH_CUDA_ARCH_LIST=9.0+PTX
+pip install -e . -v
+```
+
 - https://github.com/MasterJH5574/tensorrt-demo
+
+```
+find triton_model_repo -name "config.pbtxt" -exec sed -i 's/batch_size: 2048/batch_size: 256/g' {} \;
+find triton_model_repo -name "config.pbtxt" -exec sed -i 's/preferred_batch_size: \[ 2048 \]/preferred_batch_size: [ 256 ]/g' {} \;
+```
+
+- https://github.com/sgl-project/sglang
+
+```
+# https://github.com/sgl-project/sglang/blob/main/python/sglang/srt/layers/attention/flashinfer_backend.py
+# decoding use tensor core
+# use ragged forward
+# remove q/k/v contiguous for forward_return_lse
+```
