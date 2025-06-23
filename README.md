@@ -1,6 +1,6 @@
 # mlsys-flashinfer
 
-FlashInfer for MLSys 2024
+FlashInfer for MLSys 2025
 
 # Benchmark
 
